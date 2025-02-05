@@ -91,8 +91,12 @@ app.get('/api/classify-number/', async (req, res) => {
             "number": null,
             "error": true
         })
+    } else if(n.includes(".")) {    
+        return res.status(400).json({
+            "number": "decimal", 
+            "error": true
+        })
     }
-
     const number = parseInt(n, 10)
     const properties = []
     isArmstrong(number)? properties.push("armstrong") : null    
