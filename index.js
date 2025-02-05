@@ -73,6 +73,13 @@ const digitSum = (n) => {
         .reduce((acc, digit) => acc + digit, 0)
 }
 
+const isArmstrong = (n) => {
+    let digits = n.toString().split('')
+    let power = digits.length
+    let sum = digits.reduce((acc, digit) => acc + Math.pow(parseInt(digit), power), 0)
+    return sum === n
+}
+
 
 app.get('/api/classify-number/', async (req, res) => {
     
@@ -86,6 +93,7 @@ app.get('/api/classify-number/', async (req, res) => {
     }
     const properties = []
     number % 2 === 0? properties.push("even") : properties.push("odd")
+    isArmstrong(number)? properties.push("armstrong") : null    
     try {
         const response = await fetch(`http://numbersapi.com/${number}`);
         const data = await response.text()
