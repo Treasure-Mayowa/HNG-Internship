@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 const isPrime = num => {
+    n = Math.abs(n)
     for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
         if(num % i === 0) return false;
     }
@@ -31,7 +32,7 @@ const isPrime = num => {
 }
 
 const isPerfectNumber = (n) => {
-
+    n = Math.abs(n)
     if (!Number.isInteger(n) || n <= 0) {
         console.log("Please provide a valid positive integer.");
         return false;
@@ -75,6 +76,7 @@ const digitSum = (n) => {
 }
 
 const isArmstrong = (n) => {
+    n = Math.abs(n)
     let digits = n.toString().split('')
     let power = digits.length
     let sum = digits.reduce((acc, digit) => acc + Math.pow(parseInt(digit), power), 0)
@@ -96,7 +98,8 @@ app.get('/api/classify-number/', async (req, res) => {
     isArmstrong(number)? properties.push("armstrong") : null    
     number % 2 === 0? properties.push("even") : properties.push("odd")
     try {
-        const response = await fetch(`http://numbersapi.com/${number}`);
+        n = Math.abs(number)
+        const response = await fetch(`http://numbersapi.com/${n}`);
         const data = await response.text()
     result = {
         "number": number,
