@@ -78,7 +78,7 @@ app.get('/api/classify-number/', async (req, res) => {
     const number = parseInt(req.query.number, 10)
 
     if (isNaN(number)) {
-        res.status(400).json({
+        return res.status(400).json({
             "number": "alphabet",
             "error": true
         })
@@ -98,11 +98,12 @@ app.get('/api/classify-number/', async (req, res) => {
             "digit_sum": digitSum(number),
             "fun_fact": data, 
         }
-        res.json(result)
+        return res.json(result)
     } catch(error) {
-        res.status(500).json({
-            "error": true,
-            "message": error.message
-        })
-}
+        if (!res.headersSent) {
+            return res.status(500).json({
+                "error": true,
+                "message": error.message
+            })
+}}
 })
