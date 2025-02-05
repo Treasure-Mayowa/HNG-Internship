@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 const isPrime = num => {
-    n = Math.abs(n)
+    num = Math.abs(num)
     for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
         if(num % i === 0) return false;
     }
@@ -32,27 +32,15 @@ const isPrime = num => {
 }
 
 const isPerfectNumber = (n) => {
-    n = Math.abs(n)
-    if (!Number.isInteger(n) || n <= 0) {
-        console.log("Please provide a valid positive integer.");
-        return false;
-    }
-    
-    // Start with 1 as all numbers have 1 as a divisor
+    if (!Number.isInteger(n) || n <= 0) return false;
     let sum = 1;
-
-    // Loop to find proper divisors
-    // and calculate the sum
     for (let i = 2; i <= Math.sqrt(n); i++) {
         if (n % i === 0) {
             sum += i;
-            if (i !== n / i) {
-                sum += n / i;
-            }
+            if (i !== n / i) sum += n / i;
         }
     }
-
-  return sum === n
+    return sum === n
 }
 
 const digitSum = (n) => {
@@ -88,7 +76,7 @@ app.get('/api/classify-number/', async (req, res) => {
     number % 2 === 0? properties.push("even") : properties.push("odd")
     try {
         n = Math.abs(number)
-        const response = await fetch(`http://numbersapi.com/${n}`);
+        const response = await fetch(`http://numbersapi.com/${n}/math`);
         const data = await response.text()
         const result = {
             "number": number,
