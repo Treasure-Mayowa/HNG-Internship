@@ -59,23 +59,46 @@ const isArmstrong = (n) => {
     return sum === n
 }
 
+app.get('/', (req, res) => {
+    return res.json({
+        "message": "Welcome to Treasure's number classifier API"
+    })
+})
+
+app.get('/api/', (req, res) => {
+    return res.status(400).json({
+        "error": true,
+        "message": "Invalid path. Please visit /api/classify-number"
+    })
+})
 
 app.get('/api/classify-number/', async (req, res) => {
     
-    const number = parseInt(req.query.number, 10)
+    let n = req.query.number
 
-    if (isNaN(number)) {
+    if (!n) {
+        return res.status(400).json({
+            "number": null,
+            "error": true
+        })
+    } else if (isNaN(n)) {
         return res.status(400).json({
             "number": "alphabet",
             "error": true
         })
+    } else if(n.trim() == "") {
+        return res.status(400).json({
+            "number": null,
+            "error": true
+        })
     }
+
+    const number = parseInt(n, 10)
     const properties = []
     isArmstrong(number)? properties.push("armstrong") : null    
     number % 2 === 0? properties.push("even") : properties.push("odd")
     try {
-        let n = Math.abs(number)
-        const response = await fetch(`http://numbersapi.com/${n}/math`);
+        const response = await fetch(`http://numbersapi.com/${number}/math`);
         const data = await response.text()
         const result = {
             "number": number,
