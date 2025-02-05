@@ -91,8 +91,8 @@ app.get('/api/classify-number/', async (req, res) => {
             "error": true
         })
     }
-    isArmstrong(number)? properties.push("armstrong") : null    
     const properties = []
+    isArmstrong(number)? properties.push("armstrong") : null    
     number % 2 === 0? properties.push("even") : properties.push("odd")
     try {
         const response = await fetch(`http://numbersapi.com/${number}`);
