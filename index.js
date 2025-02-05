@@ -66,6 +66,7 @@ const isPerfectNumber = (n) => {
 }
 
 const digitSum = (n) => {
+    n = Math.abs(n)
     return n
         .toString()
         .split('')
