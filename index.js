@@ -52,18 +52,7 @@ const isPerfectNumber = (n) => {
         }
     }
 
-    // Check if the sum of proper divisors
-    // equals the original number
-    const isPerfect = sum === n;
-
-    // Output the result
-    if (isPerfect) {
-        console.log(`${n} is a perfect number.`);
-    } else {
-        console.log(`${n} is not a perfect number.`);
-    }
-
-    return isPerfect;
+  return sum === n
 }
 
 const digitSum = (n) => {
@@ -101,19 +90,19 @@ app.get('/api/classify-number/', async (req, res) => {
         n = Math.abs(number)
         const response = await fetch(`http://numbersapi.com/${n}`);
         const data = await response.text()
-    result = {
-        "number": number,
-        "is_prime": isPrime(number),
-        "is_perfect": isPerfectNumber(number),
-        "properties": properties,
-        "digit_sum": digitSum(number),
-        "fun_fact": data, 
-    }
-    res.json(result)
-} catch(error) {
-    res.status(500).json({
-        "error": true,
-        "message": error.message
-    })
+        const result = {
+            "number": number,
+            "is_prime": isPrime(number),
+            "is_perfect": isPerfectNumber(number),
+            "properties": properties,
+            "digit_sum": digitSum(number),
+            "fun_fact": data, 
+        }
+        res.json(result)
+    } catch(error) {
+        res.status(500).json({
+            "error": true,
+            "message": error.message
+        })
 }
 })
