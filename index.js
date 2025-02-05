@@ -74,7 +74,7 @@ app.get('/api/classify-number/', async (req, res) => {
     isArmstrong(number)? properties.push("armstrong") : null    
     number % 2 === 0? properties.push("even") : properties.push("odd")
     try {
-        let n = Math.abs(n)
+        let n = Math.abs(number)
         const response = await fetch(`http://numbersapi.com/${n}/math`);
         const data = await response.text()
         const result = {
